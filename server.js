@@ -2,7 +2,7 @@
 require("dotenv").config(); // Load environment variables from .env file
 
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors");
 const db = require("./src/database");
 
 // Import routes
@@ -15,13 +15,14 @@ const app = express();
 // as Vercel handles the listening port automatically.
 
 // =========================================================================
-// CORS Configuration
+// CORS Configuration (Commented Out)
 // This configures which origins are allowed to make requests to your backend.
 // Adjust 'allowedOrigins' to include all domains your frontend will be served from.
 // =========================================================================
+/*
 const allowedOrigins = [
   "http://localhost:3000", // For local development of your React frontend
-  "https://aahdc-lottery-platform.vercel.app", // <-- REPLACE WITH YOUR ACTUAL FRONTEND VERCEL DOMAIN
+  "https://vercel.com/minale-fetenes-projects", // <-- REPLACE WITH YOUR ACTUAL FRONTEND VERCEL DOMAIN
   "https://aahdc-lottery.vercel.app", // This might be your backend domain itself, good to include
   // Add any other domains where your frontend might be hosted in the future (e.g., custom domains)
 ];
@@ -43,6 +44,7 @@ const corsOptions = {
 
 // Use the CORS middleware with the defined options
 app.use(cors(corsOptions));
+*/
 
 // =========================================================================
 // Middleware
