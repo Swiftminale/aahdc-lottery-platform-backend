@@ -2,7 +2,7 @@
 require("dotenv").config(); // Load environment variables from .env file
 
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 const db = require("./src/database");
 
 // Import routes
@@ -43,12 +43,12 @@ const corsOptions = {
 };
 
 // Use the CORS middleware with the defined options
-app.use(cors(corsOptions));
 */
 
 // =========================================================================
 // Middleware
 // =========================================================================
+app.use(cors());
 app.use(express.json()); // For parsing application/json requests (e.g., from frontend forms)
 
 // =========================================================================
