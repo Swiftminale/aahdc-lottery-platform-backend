@@ -12,6 +12,7 @@ import allocationRoutes from "./src/routes/allocationRoutes.js";
 import reportRoutes from "./src/routes/reportRoutes.js";
 
 const app = express();
+const cors = require("cors");
 // =========================================================================
 // =========================================================================
 // Middleware
