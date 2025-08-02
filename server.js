@@ -11,6 +11,12 @@ const allocationRoutes = require("./src/routes/allocationRoutes");
 const reportRoutes = require("./src/routes/reportRoutes");
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:3000", // For local development of your React frontend
+  "https://aahdc-lottery-platform.vercel.app/", // <-- REPLACE WITH YOUR ACTUAL FRONTEND VERCEL DOMAIN
+  "https://aahdc-lottery-platform-backend-swiftminale2482-tupvb4im.leapcell.dev", // This might be your backend domain itself, good to include
+  // Add any other domains where your frontend might be hosted in the future (e.g., custom domains)
+];
 // The PORT variable is not relevant for Vercel serverless functions,
 // as Vercel handles the listening port automatically.
 
@@ -20,12 +26,7 @@ const app = express();
 // Adjust 'allowedOrigins' to include all domains your frontend will be served from.
 // =========================================================================
 /*
-const allowedOrigins = [
-  "http://localhost:3000", // For local development of your React frontend
-  "https://vercel.com/minale-fetenes-projects", // <-- REPLACE WITH YOUR ACTUAL FRONTEND VERCEL DOMAIN
-  "https://aahdc-lottery.vercel.app", // This might be your backend domain itself, good to include
-  // Add any other domains where your frontend might be hosted in the future (e.g., custom domains)
-];
+
 
 const corsOptions = {
   origin: function (origin, callback) {
