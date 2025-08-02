@@ -1,7 +1,7 @@
 // backend/src/services/lotteryService.js
-const db = require('../database');
-const Unit = db.Unit;
-const { checkPostAllocationCompliance } = require('./complianceService'); // Import for internal checks
+import { Unit as _Unit } from '../database';
+const Unit = _Unit;
+import { checkPostAllocationCompliance } from './complianceService'; // Import for internal checks
 
 // Helper to check typology caps for AAHDC's allocation
 const checkTypologyCaps = (currentUnits, unitToAdd, totalResidentialArea) => {
@@ -38,7 +38,7 @@ const checkTypologyCaps = (currentUnits, unitToAdd, totalResidentialArea) => {
 
 
 // Full Lottery Algorithm
-exports.fullLottery = async (units) => {
+export async function fullLottery(units) {
   const totalGrossArea = units.reduce((sum, unit) => sum + unit.grossArea, 0);
   const targetAahdcArea = totalGrossArea * 0.30;
   let allocatedAahdcArea = 0;
@@ -89,10 +89,10 @@ exports.fullLottery = async (units) => {
   }
 
   return { aahdcUnits, devUnits, allocatedAahdcArea };
-};
+}
 
 // Hybrid Lottery Algorithm
-exports.hybridLottery = async (units) => {
+export async function hybridLottery(units) {
   const residentialUnits = units.filter(unit => unit.typology !== 'Shop');
   const commercialUnits = units.filter(unit => unit.typology === 'Shop');
 
@@ -139,10 +139,10 @@ exports.hybridLottery = async (units) => {
     allocatedAahdcResidentialArea,
     allocatedAahdcCommercialArea
   };
-};
+}
 
 // Block-by-Block Assignment (simplified)
-exports.blockByBlockAssignment = async (units) => {
+export async function blockByBlockAssignment(units) {
   // This method would require explicit input from AAHDC on which blocks/floors they want.
   // For demonstration, let's say AAHDC gets blocks based on their gross area until 30% is met.
   // Blocks are sorted by name for consistent, but arbitrary, selection.
@@ -190,10 +190,10 @@ exports.blockByBlockAssignment = async (units) => {
   // Re-distribute any units if AAHDC is significantly under target and dev has many small units
   // This logic can be complex and depends on strictness of 30% rule vs. block integrity.
   return { aahdcUnits, devUnits, allocatedAahdcArea };
-};
+}
 
 // Lottery Based on Floor Number (simplified)
-exports.floorBasedLottery = async (units) => {
+export async function floorBasedLottery(units) {
   // This would typically involve AAHDC specifying which floors they prefer (e.g., lower, middle, higher)
   // For demonstration, let's assume AAHDC gets units from a mix of floors, prioritizing lower floors.
   const unitsByFloor = {};
@@ -228,4 +228,4 @@ exports.floorBasedLottery = async (units) => {
   }
   // Similar to block-by-block, this needs more precise rules from AAHDC
   return { aahdcUnits, devUnits, allocatedAahdcArea };
-};
+}

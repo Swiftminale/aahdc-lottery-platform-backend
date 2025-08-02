@@ -1,9 +1,9 @@
 // backend/src/controllers/unitController.js
-const db = require('../database');
-const { Op } = require('sequelize');
-const Unit = db.Unit;
+import { Unit as _Unit } from '../database';
+import { Op } from 'sequelize';
+const Unit = _Unit;
 
-exports.submitUnits = async (req, res) => {
+export async function submitUnits(req, res) {
   try {
     const units = req.body; // Array of unit objects
     if (!Array.isArray(units) || units.length === 0) {
@@ -59,9 +59,9 @@ exports.submitUnits = async (req, res) => {
     console.error('Error submitting units:', error);
     res.status(500).json({ message: 'Server error during unit submission', error: error.message });
   }
-};
+}
 
-exports.getUnits = async (req, res) => {
+export async function getUnits(req, res) {
   try {
     const units = await Unit.findAll();
     res.status(200).json(units);
@@ -69,4 +69,4 @@ exports.getUnits = async (req, res) => {
     console.error('Error fetching units:', error);
     res.status(500).json({ message: 'Server error fetching units', error: error.message });
   }
-};
+}

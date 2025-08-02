@@ -1,6 +1,6 @@
 // backend/src/services/complianceService.js
-const db = require('../database');
-const Unit = db.Unit;
+import { Unit as _Unit } from '../database';
+const Unit = _Unit;
 
 // Helper to check typology caps for AAHDC's allocation
 const checkTypologyCaps = (currentUnits, unitToAdd, totalResidentialArea) => {
@@ -36,7 +36,7 @@ const checkTypologyCaps = (currentUnits, unitToAdd, totalResidentialArea) => {
 };
 
 
-exports.checkPreAllocationCompliance = async (units) => {
+export async function checkPreAllocationCompliance(units) {
   const complianceIssues = [];
 
   // This check is more about the *outcome* of the lottery, not an input validation
@@ -99,9 +99,9 @@ exports.checkPreAllocationCompliance = async (units) => {
   }
 
   return { isCompliant: complianceIssues.length === 0, issues: complianceIssues };
-};
+}
 
-exports.checkPostAllocationCompliance = async (aahdcUnits, developerUnits) => {
+export async function checkPostAllocationCompliance(aahdcUnits, developerUnits) {
     const complianceIssues = [];
 
     const allUnits = [...aahdcUnits, ...developerUnits];
@@ -150,4 +150,4 @@ exports.checkPostAllocationCompliance = async (aahdcUnits, developerUnits) => {
     }
 
     return { isCompliant: complianceIssues.length === 0, issues: complianceIssues };
-};
+}
