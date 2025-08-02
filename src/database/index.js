@@ -1,6 +1,6 @@
 // backend/src/database/index.js
-const { Sequelize, DataTypes } = require("sequelize");
-const config = require("../../config/config");
+import { Sequelize, DataTypes } from "sequelize";
+import config from "../../config/config";
 
 const env = process.env.NODE_ENV || "development";
 const dbConfig = config[env];
@@ -27,4 +27,4 @@ db.sequelize = sequelize;
 db.Unit = require("../../models/unit").default(sequelize, DataTypes);
 // Add other models here as your application grows (e.g., User, Project)
 
-module.exports = db;
+export default db;

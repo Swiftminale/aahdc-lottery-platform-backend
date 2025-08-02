@@ -1,10 +1,10 @@
 // backend/src/routes/allocationRoutes.js
-const express = require('express');
-const router = express.Router();
-const allocationController = require('../controllers/allocationController');
+import { Router } from 'express';
+const router = Router();
+import { runAllocation, getAllocatedUnits, getUnallocatedUnits } from '../controllers/allocationController';
 
-router.post('/run', allocationController.runAllocation);
-router.get('/allocated', allocationController.getAllocatedUnits);
-router.get('/unallocated', allocationController.getUnallocatedUnits);
+router.post('/run', runAllocation);
+router.get('/allocated', getAllocatedUnits);
+router.get('/unallocated', getUnallocatedUnits);
 
-module.exports = router;
+export default router;

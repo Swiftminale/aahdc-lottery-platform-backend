@@ -1,13 +1,13 @@
 // backend/src/routes/reportRoutes.js
-const express = require('express');
-const router = express.Router();
-const reportingService = require('../services/reportingService');
-const path = require('path');
-const fs = require('fs');
+import { Router } from 'express';
+const router = Router();
+import { generateAllocationReport } from '../services/reportingService';
+import { basename } from 'path';
+import { unlink } from 'fs';
 
 router.get('/excel', async (req, res) => {
   try {
-    const { generateExcel } = await reportingService.generateAllocationReport();
+    const { generateExcel } = await generateAllocationReport();
     const excelBuffer = await generateExcel();
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader('Content-Disposition', 'attachment; filename="allocation_report.xlsx"');
@@ -20,14 +20,14 @@ router.get('/excel', async (req, res) => {
 
 router.get('/pdf', async (req, res) => {
   try {
-    const { generatePdf } = await reportingService.generateAllocationReport();
+    const { generatePdf } = await generateAllocationReport();
     const filePath = await generatePdf(); // This creates a file on the server
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
+    res.setHeader('Content-Disposition', `attachment; filename="${basename(filePath)}"`);
     res.sendFile(filePath, (err) => {
       if (err) console.error('Error sending PDF file:', err);
       // Clean up the created file after sending
-      fs.unlink(filePath, (unlinkErr) => {
+      unlink(filePath, (unlinkErr) => {
         if (unlinkErr) console.error('Error deleting PDF file:', unlinkErr);
       });
     });
@@ -37,4 +37,4 @@ router.get('/pdf', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

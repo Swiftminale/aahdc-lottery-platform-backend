@@ -1,9 +1,9 @@
 // backend/src/routes/unitRoutes.js
-const express = require('express');
-const router = express.Router();
-const unitController = require('../controllers/unitController');
+import { Router } from 'express';
+const router = Router();
+import { submitUnits, getUnits } from '../controllers/unitController';
 
-router.post('/', unitController.submitUnits);
-router.get('/', unitController.getUnits);
+router.post('/', submitUnits);
+router.get('/', getUnits);
 
-module.exports = router;
+export default router;
