@@ -13,11 +13,18 @@ import reportRoutes from "./src/routes/reportRoutes.js";
 
 const app = express();
 // =========================================================================
+// =========================================================================
 // Middleware
 // =========================================================================
-app.use(cors()); // Enable default CORS (allows all origins)
-app.use(express.json()); // For parsing application/json requests (e.g., from frontend forms)
-
+app.use(
+  cors({
+    origin: "https://aahdc-lottery-platform.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+app.use(express.json());
 // =========================================================================
 // API Routes
 // =========================================================================
