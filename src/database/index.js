@@ -1,6 +1,6 @@
 // backend/src/database/index.js
 import { Sequelize, DataTypes } from "sequelize";
-import config from "../../config/config";
+import * as config from "../../config/config.js";
 
 const env = process.env.NODE_ENV || "development";
 const dbConfig = config[env];
@@ -11,7 +11,6 @@ const sequelize = new Sequelize(dbConfig.use_env_variable, {
   dialectOptions: dbConfig.dialectOptions,
   logging: dbConfig.logging,
   pool: {
-    // Adjust pool settings for serverless environments if needed
     max: 5,
     min: 0,
     acquire: 30000,
@@ -23,8 +22,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Import models
-db.Unit = require("../../models/unit").default(sequelize, DataTypes);
-// Add other models here as your application grows (e.g., User, Project)
+// ESM-compatible dynamic import of models
+import unitModel from "../../models/unit.js";
+db.Unit = unitModel(sequelize, DataTypes);
 
+// Export the db object
 export default db;
